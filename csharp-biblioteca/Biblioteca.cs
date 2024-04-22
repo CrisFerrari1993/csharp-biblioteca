@@ -51,5 +51,19 @@ namespace csharp_biblioteca
             DvD godzilla = new DvD("godzilla", 1996, "animazione", false, 15.14f, "Lorenzo Rossi", "87A6FG76T9", 70);
             documentiLista.Add(godzilla);
         }
+
+        //funzione per creare user
+        public void GeneraUtenti()
+        {
+            Utenti utente1 = new Utenti("Ferrari", "Cristopher", "cristopher@mail.it", "uiopERTY", "3338974657");
+            Utenti utente2 = new Utenti("Bianchi", "Lucaa", "lucabianchi@mail.it", "TYUIghj", "3338974456");
+            Utenti utente3 = new Utenti("Verdi", "Antonio", "antonioverdi@mail.it", "uiopERTY", "3338974132");
+            Utenti utente4 = new Utenti("Rossi", "Pino", "redpinus@mail.it", "uydsauRTY", "3338476457");
+            utentiLista.Add(utente1);
+            utentiLista.Add(utente2);
+            utentiLista.Add(utente3);
+            utentiLista.Add(utente4);
+
+        }
     }
 }
