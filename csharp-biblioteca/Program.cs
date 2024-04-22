@@ -4,7 +4,8 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            Utente user1 = new Utente("Cristopher", "Ferrari", "ferraricristopher93@gmail.com", "Papera1818", "3394272208");
+            
         }
     }
 }

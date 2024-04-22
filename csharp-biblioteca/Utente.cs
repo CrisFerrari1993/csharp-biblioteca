@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace csharp_biblioteca
 {
-    internal class Utente
+    public class Utente
     {
         private string _cognome;
         private string _nome;
@@ -23,9 +23,19 @@ namespace csharp_biblioteca
         //Costruuttore
         public Utente(string nome, string cognome, string email, string password, string telefono)
         {
+            if(email.Contains("@") && email.Contains("."))
+            { 
+                this._email = email;
+            }
+            else
+            {
+                Console.WriteLine("La mail non è valida, reinserisci una mail valida");
+                email = Console.ReadLine();
+                this._email = email;
+
+            }
             this._nome = nome;
             this._cognome = cognome;
-            this._email = email;
             this._password = password;
             this._recapitoTelefonico = telefono;
         }
