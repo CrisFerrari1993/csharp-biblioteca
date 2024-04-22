@@ -64,29 +64,63 @@ namespace csharp_biblioteca
             utentiLista.Add(utente3);
             utentiLista.Add(utente4);
         }
-        //funzione che prende il prestito
-        public void GetPrestito()
+        public void GetAllDocuments()
         {
-            Console.Write("Inserisci il cognome: ");
-            string cognome = Console.ReadLine();
-            Console.Write("Inserisci il nome: ");
-            string nome = Console.ReadLine();
-
-            foreach (Prestito item in prestitiLista)
+            foreach (Documento doc in documentiLista)
             {
-                if (nome == item.UtentePrestito.Nome && cognome == item.UtentePrestito.Cognome)
+                Console.WriteLine("Titolo : " + doc.Titolo + " - Codice : " + doc.CodiceIdentificativo);
+            }
+            Console.WriteLine();
+        }
+
+        public void checkDocument()
+        {
+            Console.WriteLine("inserisci il Titolo o il Codice Prodotto");
+            string ToSearch = Console.ReadLine();
+
+            foreach (Documento doc in documentiLista)
+            {
+
+                if (doc.Titolo == ToSearch || doc.CodiceIdentificativo == ToSearch)
                 {
-                    Console.WriteLine($"{item.UtentePrestito.Cognome} {item.UtentePrestito.Nome} ha preso in prestito {item.documentoPrestato.Titolo}");
+                    if (doc.Stato)
+                    {
+                        Console.WriteLine("Titolo : " + doc.Titolo + " - Codice : " + doc.CodiceIdentificativo);
+                        Console.WriteLine("Sei Registrato 1 - Si  2 - NO");
+                        int risposta = Convert.ToInt32(Console.ReadLine());
+
+                        switch (risposta)
+                        {
+                            case 1:
+                                GetUtente(doc);
+                                break;
+                            default:
+                                RegistraUtente();
+                                Console.Write("Data Inizio : ");
+                                string inizio = Console.ReadLine();
+                                Console.Write("Data Fine : ");
+                                string fine = Console.ReadLine();
+                                Prestito prestito = new Prestito(inizio, fine, doc, utentiLista[utentiLista.Count() - 1]);
+                                prestitiLista.Add(prestito);
+                                doc.Stato = false;
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Documento momentaneamente non disponibile premi invio uscire");
+                        return;
+                    }
+
                 }
             }
         }
 
-        //funzione che prende i dati dell'utente
         public void GetUtente(Documento doc)
         {
-            Console.Write("Inserisci il cognome: ");
+            Console.Write("Cognome : ");
             string cognome = Console.ReadLine();
-            Console.Write("Inserisci il nome: ");
+            Console.Write("Nome : ");
             string nome = Console.ReadLine();
 
             foreach (Utenti item in utentiLista)
@@ -103,46 +137,12 @@ namespace csharp_biblioteca
                 }
             }
         }
-        //funzione che controlla i documenti
-        public void controllaDoc()
+
+        public void GetPrestito()
         {
-            Console.WriteLine("Inserisci il titolo o il codice del prodotto");
-            string cerca = Console.ReadLine();
-
-            foreach(Documento documento in documentiLista) 
-            {
-                if(documento.Titolo == cerca || documento.CodiceIdentificativo == cerca)
-                {
-                    if(documento.Stato)
-                    {
-                        Console.WriteLine($"Titolo: {documento.Titolo} - Codice: {documento.CodiceIdentificativo}");
-                        Console.WriteLine("Sei registrato? (SI/1 NO/2)");
-                        int risposta = int.Parse(Console.ReadLine());
-                        
-                        switch(risposta)
-                        {
-                            case 1:
-                                GetUtente(documento);
-                                break;
-                            default:
-                                RegistraUtente();
-                                Console.Write("Data Inizio : ");
-                                string inizio = Console.ReadLine();
-                                Console.Write("Data Fine : ");
-                                string fine = Console.ReadLine();
-                                Prestito prestito = new Prestito(inizio, fine, documento, utentiLista[utentiLista.Count() - 1]);
-                                prestitiLista.Add(prestito);
-                                documento.Stato = false;
-                                break;
-
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Documento non disponibile");
-                        return;
-                    }
-                }
+            foreach (Prestito item in prestitiLista)
+            {  
+                Console.WriteLine(item.UtentePrestito.Cognome + " " + item.UtentePrestito.Nome + " ha preso in prestito " + item.documentoPrestato.Titolo);               
             }
         }
     }
