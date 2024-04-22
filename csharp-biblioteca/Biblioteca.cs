@@ -63,7 +63,87 @@ namespace csharp_biblioteca
             utentiLista.Add(utente2);
             utentiLista.Add(utente3);
             utentiLista.Add(utente4);
+        }
+        //funzione che prende il prestito
+        public void GetPrestito()
+        {
+            Console.Write("Inserisci il cognome: ");
+            string cognome = Console.ReadLine();
+            Console.Write("Inserisci il nome: ");
+            string nome = Console.ReadLine();
 
+            foreach (Prestito item in prestitiLista)
+            {
+                if (nome == item.UtentePrestito.Nome && cognome == item.UtentePrestito.Cognome)
+                {
+                    Console.WriteLine($"{item.UtentePrestito.Cognome} {item.UtentePrestito.Nome} ha preso in prestito {item.documentoPrestato.Titolo}");
+                }
+            }
+        }
+
+        //funzione che prende i dati dell'utente
+        public void GetUtente(Documento doc)
+        {
+            Console.Write("Inserisci il cognome: ");
+            string cognome = Console.ReadLine();
+            Console.Write("Inserisci il nome: ");
+            string nome = Console.ReadLine();
+
+            foreach (Utenti item in utentiLista)
+            {
+                if (nome == item.Nome && cognome == item.Cognome)
+                {
+                    Console.Write("Data Inizio : ");
+                    string inizio = Console.ReadLine();
+                    Console.Write("Data Fine : ");
+                    string fine = Console.ReadLine();
+                    Prestito prestito = new Prestito(inizio, fine, doc, item);
+                    prestitiLista.Add(prestito);
+                    doc.Stato = false;
+                }
+            }
+        }
+        //funzione che controlla i documenti
+        public void controllaDoc()
+        {
+            Console.WriteLine("Inserisci il titolo o il codice del prodotto");
+            string cerca = Console.ReadLine();
+
+            foreach(Documento documento in documentiLista) 
+            {
+                if(documento.Titolo == cerca || documento.CodiceIdentificativo == cerca)
+                {
+                    if(documento.Stato)
+                    {
+                        Console.WriteLine($"Titolo: {documento.Titolo} - Codice: {documento.CodiceIdentificativo}");
+                        Console.WriteLine("Sei registrato? (SI/1 NO/2)");
+                        int risposta = int.Parse(Console.ReadLine());
+                        
+                        switch(risposta)
+                        {
+                            case 1:
+                                GetUtente(documento);
+                                break;
+                            default:
+                                RegistraUtente();
+                                Console.Write("Data Inizio : ");
+                                string inizio = Console.ReadLine();
+                                Console.Write("Data Fine : ");
+                                string fine = Console.ReadLine();
+                                Prestito prestito = new Prestito(inizio, fine, documento, utentiLista[utentiLista.Count() - 1]);
+                                prestitiLista.Add(prestito);
+                                documento.Stato = false;
+                                break;
+
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Documento non disponibile");
+                        return;
+                    }
+                }
+            }
         }
     }
 }
