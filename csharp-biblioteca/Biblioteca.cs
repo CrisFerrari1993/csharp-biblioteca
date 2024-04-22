@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 
 namespace csharp_biblioteca
 {
-    internal class Biblioteca
+    public class Biblioteca
     {
+        // Creo liste per utenti, documenti e prestiti
+        public List<Utenti> utentiLista = new List<Utenti>();
+        public List<Documento> documentiLista = new List<Documento>();
+        public List<Prestito> prestitiLista = new List<Prestito>();
+
 
     }
 }
